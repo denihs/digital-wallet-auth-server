@@ -1,11 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import helmet from "helmet";
 import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 
 const app = express();
+
+app.use(helmet());
 app.use(express.json()); // For parsing JSON
 
 // Connect to MongoDB
