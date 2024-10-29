@@ -1,9 +1,15 @@
-import express from 'express';
-import { register, login } from '../controllers/authController.js';
+import { Router } from 'express';
+import authMiddleware from '../middleware/authMiddleware.js';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/register', register);
-router.post('/login', login);
-
-export default router;
+export default function authRoutes(app) {
+  router.post('/register');
+  router.post('/login');
+  
+  app.use('/api', authMiddleware); 
+  app.get('/protected-route', authMiddleware, (req, res) => {
+    // Your route handler
+  });
+  app.use('/auth', router);
+}
